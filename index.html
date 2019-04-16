@@ -60,6 +60,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.45.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.45.0/addon/runmode/colorize.min.js"></script>
 <script>
+CodeMirror.keyMap.default["Shift-Tab"] = "indentLess";
+CodeMirror.keyMap.default["Tab"] = "indentMore";
+
 var noEditor = CodeMirror(document.getElementById('no'), {
   value: "function myScript() \n{\n    return 100;\n}\n",
   mode:  "python"
