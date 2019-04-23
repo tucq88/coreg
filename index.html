@@ -40,6 +40,10 @@
         .positive {
             color: #30A54A;
         }
+        .CodeMirror {
+            font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -54,24 +58,46 @@
     </div>
     <div class="clearfix"></div>
     <footer>
+        <select name="mode" id="mode" onchange="selectMode()">
+            <option value="python" selected="selected">Python</option>
+            <option value="javascript">Javascript</option>
+        </select>
+        <br><br>
         <address>(c) 04-2019</address>
     </footer>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.45.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.45.0/addon/runmode/colorize.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/mode/javascript/javascript.min.js"></script>
+<script src=""></script>
 <script>
 CodeMirror.keyMap.default["Shift-Tab"] = "indentLess";
 CodeMirror.keyMap.default["Tab"] = "indentMore";
 
-var noEditor = CodeMirror(document.getElementById('no'), {
-  value: "function myScript() \n{\n    return 100;\n}\n",
-  mode:  "python"
-});
-var yesEditor = CodeMirror(document.getElementById('yes'), {
-  value: "def myScript(): return 100\n",
-  mode:  "python"
-});
+var noEditor = initEditor(document.getElementById('no'),
+    'python',
+    "function myScript() \n{\n    return 100;\n}\n"
+);
+
+var yesEditor = initEditor(document.getElementById('yes'),
+    'python',
+    "def myScript(): return 100\n"
+);
+
+function initEditor(dom, mode = 'python', value = '') {
+    return CodeMirror(dom, {
+        value: value,
+        mode:  mode
+    });
+}
+
+function selectMode() {
+    modeSelector = document.getElementById("mode");
+    mode = modeSelector.options[modeSelector.selectedIndex].value;
+    noEditor.setOption("mode", mode);
+    yesEditor.setOption("mode", mode);
+}
 </script>
 
 </html>
